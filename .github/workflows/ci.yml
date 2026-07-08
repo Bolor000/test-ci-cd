@@ -7,15 +7,14 @@ on:
 
 jobs:
   lint-client:
-    name: Durem shalgalt
-
+    name: Durem болон Тест шалгалт
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      # 1. GitHub сервер дээр таны кодыг татаж авч ирэх алхам (ЗААВАЛ ХЭРЭГТЭЙ)
+      # 1. GitHub сервер дээр таны кодыг татаж авч ирэх алхам
       - uses: actions/checkout@v4
 
       # 2. Bun орчныг бэлдэх
@@ -24,5 +23,11 @@ jobs:
       # 3. Багцуудыг суулгах
       - run: bun install --frozen-lockfile
 
-      # 4. ESLint ажиллуулах
-      - run: bun run lint
+      # 4. ESLint ажиллуулах (Дүрэм шалгах)
+      - name: Run ESLint
+        run: bun run lint
+
+      # 5. Тестүүдийг ажиллуулах (ШИНЭЭР НЭМЭВ)
+      # Сурагчид кодондоо *.test.ts файл бичсэн бол робот автоматаар шалгана
+      - name: Run Tests
+        run: bun test
