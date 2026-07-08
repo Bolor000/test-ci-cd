@@ -1,18 +1,27 @@
 name: CI testing
 
 on:
- push:
- branches: [main]
- workflow_call:
+  push:
+    branches: [main]
+  workflow_call:
 
 jobs: 
- lint-client: 
- name: Durem shalgalt
- runs-on: ubuntu-latest
- steps:
+  lint-client: 
+    name: Durem shalgalt
+    runs-on: ubuntu-latest
+    steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
+      # 1. GitHub сервер дээр таны кодыг татаж авч ирэх алхам (ЗААВАЛ ХЭРЭГТЭЙ)
+      - uses: actions/checkout@v4
+
+      # 2. Bun орчныг бэлдэх
       - uses: oven-sh/setup-bun@v2
+
+      # 3. Багцуудыг суулгах
       - run: bun install --frozen-lockfile
+
+      # 4. ESLint ажиллуулах
       - run: bun run lint
